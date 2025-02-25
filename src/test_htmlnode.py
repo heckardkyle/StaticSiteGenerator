@@ -1,5 +1,5 @@
 import unittest
-from htmlnode import HTMLNode, LeafNode
+from htmlnode import HTMLNode, LeafNode, ParentNode
 
 
 class TestHTMLNode(unittest.TestCase):
@@ -69,6 +69,21 @@ class TestHTMLNode(unittest.TestCase):
     def test_LeafNode4(self):
         node = LeafNode("a", "value", {"k1": "v1", "k2": "v2"})
         string = '<a k1="v1" k2="v2">value</a>'
+        self.assertEqual(string, node.to_html())
+
+    def test_ParentNode(self):
+        node = ParentNode(
+            "p",
+            [
+                LeafNode("a", "link", {"href": "value"}),
+                LeafNode("b", "bold"),
+                LeafNode(None, "value")
+            ],
+            {
+                "key": "value"
+            }
+        )
+        string = '<p key="value"><a href="value">link</a><b>bold</b>value</p>'
         self.assertEqual(string, node.to_html())
 
 
