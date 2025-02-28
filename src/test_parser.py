@@ -1,5 +1,5 @@
 import unittest
-from parser import split_nodes_delimiter
+from parsers import split_nodes_delimiter, extract_markdown_images, extract_markdown_links
 from textnode import TextNode, TextType
 
 class TestParser(unittest.TestCase):
@@ -73,6 +73,24 @@ class TestParser(unittest.TestCase):
         ]
         with self.assertRaises(Exception):
             new_nodes = split_nodes_delimiter(old_nodes, "**", TextType.BOLD)
+
+    def test_extract_markdown_images(self):
+        text = "Some text ![image](htp#!a) and ![af](asfkdl)"
+        matches = extract_markdown_images(text)
+        expected = [
+            ("image", "htp#!a"),
+            ("af", "asfkdl")
+        ]
+        self.assertEqual(matches, expected)
+
+    def test_extract_markdown_links(self):
+        text = "Text with [one link](link) and [another](lsfine.cs)"
+        matches = extract_markdown_links(text)
+        expected = [
+            ("one link", "link"),
+            ("another", "lsfine.cs")
+        ]
+        self.assertEqual(matches, expected)
 
 
 if __name__ == "__main__":
