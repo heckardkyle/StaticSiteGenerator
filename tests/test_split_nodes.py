@@ -7,7 +7,7 @@ from split_nodes import text_to_textnodes
 from textnode import TextNode, TextType
 
 
-class TestParser(unittest.TestCase):
+class Test_Split_Nodes(unittest.TestCase):
     def test_split_nodes_delimiter_no_parse(self):
         node = TextNode("Bold text", TextType.BOLD)
         old_nodes = [
@@ -41,6 +41,19 @@ class TestParser(unittest.TestCase):
         expected_nodes = [
             TextNode("Text with ", TextType.TEXT),
             TextNode("italic", TextType.ITALIC),
+            TextNode(" stuff", TextType.TEXT)
+        ]
+        self.assertEqual(expected_nodes, new_nodes)
+    
+    def test_split_nodes_delimiter_code_parse(self):
+        node = TextNode("Text with `code` stuff", TextType.TEXT)
+        old_nodes = [
+            node
+        ]
+        new_nodes = split_nodes_delimiter(old_nodes, "`", TextType.CODE)
+        expected_nodes = [
+            TextNode("Text with ", TextType.TEXT),
+            TextNode("code", TextType.CODE),
             TextNode(" stuff", TextType.TEXT)
         ]
         self.assertEqual(expected_nodes, new_nodes)
