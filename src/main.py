@@ -21,10 +21,13 @@ def copy_static_files(path, files):
         return
     for file in files:
         file_path = os.path.join(path, file)
-        relative_path = os.path.relpath(path, static_path)
 
         if os.path.isfile(file_path):
-            dest_dir = os.path.join(public_path, relative_path)
+            relative_path = os.path.relpath(path, static_path)
+            if relative_path == '.':
+                dest_dir = public_path
+            else:
+                dest_dir = os.path.join(public_path, relative_path)
             os.makedirs(dest_dir, exist_ok=True)
             dest_file = os.path.join(dest_dir, file)
             print(f"Copying {file_path} to {dest_file}")
