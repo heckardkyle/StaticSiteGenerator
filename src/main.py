@@ -1,6 +1,6 @@
 import os
 import shutil
-from textnode import TextType, TextNode
+from generate_webpage import generate_page
 
 public_path = os.path.join(".", "public")
 static_path = os.path.join(".", "static")
@@ -14,7 +14,7 @@ def generate_public_files():
     if os.path.exists(public_path):
         shutil.rmtree(public_path)
     os.makedirs(public_path, exist_ok=True)
-    copy_static_files(static_path ,os.listdir(static_path))
+    copy_static_files(static_path, os.listdir(static_path))
     
 def copy_static_files(path, files):
     if files == []:
@@ -37,6 +37,8 @@ def copy_static_files(path, files):
             os.makedirs(new_dir, exist_ok=True)
             
             copy_static_files(file_path, os.listdir(file_path))
+
+    generate_page("./content/index.md", "./template.html", "./public/index.html")
     
     return
 
