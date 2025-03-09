@@ -27,7 +27,7 @@ def open_file(path):
     file.close
     return output
 
-def generate_pages_recursive(dir_path_content, template_path, dest_dir_path):
+def generate_pages_recursive(dir_path_content, template_path, dest_dir_path, basepath):
     paths = os.listdir(dir_path_content)
     for path in paths:
         dir_path = os.path.join(dir_path_content, path)
@@ -39,8 +39,8 @@ def generate_pages_recursive(dir_path_content, template_path, dest_dir_path):
             title = extract_title(from_path_copy)
             template_path_copy = template_path_copy.replace("{{ Title }}", title)
             template_path_copy = template_path_copy.replace("{{ Content }}", html_str)
-            template_path_copy = template_path_copy.replace('href="/', f'href="{dir_path_content}')
-            template_path_copy = template_path_copy.replace('src="/', f'src="{dir_path_content}')
+            template_path_copy = template_path_copy.replace('href="/', f'href="{basepath}')
+            template_path_copy = template_path_copy.replace('src="/', f'src="{basepath}')
             new_dest = os.path.join(dest_dir_path, path)
             new_dest = new_dest.replace(".md", ".html")
             os.makedirs(os.path.dirname(new_dest), exist_ok=True)

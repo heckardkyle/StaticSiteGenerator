@@ -43,7 +43,7 @@ def copy_static_files(path, files):
             
             copy_static_files(file_path, os.listdir(file_path))
 
-    generate_pages_recursive("./content/", "./template.html", public_path)
+    generate_pages_recursive("./content/", "./template.html", public_path, base_path)
     
     return
 
