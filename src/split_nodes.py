@@ -6,13 +6,15 @@ def split_nodes_delimiter(old_nodes, delimiter, text_type):
     for node in old_nodes:
         if node.text_type != TextType.TEXT or node.text.count(delimiter) <= 0:
             nodes.append(node)
-        elif node.text.count(delimiter) != 2:
+        elif node.text.count(delimiter) % 2 != 0:
             raise Exception("There must be 2 delimiters")
         else:
             parsed_text = node.text.split(delimiter)
-            nodes.append(TextNode(parsed_text[0], TextType.TEXT))
-            nodes.append(TextNode(parsed_text[1], text_type))
-            nodes.append(TextNode(parsed_text[2], TextType.TEXT))
+            for text in parsed_text:
+                if parsed_text.index(text) % 2 == 0:
+                    nodes.append(TextNode(text, TextType.TEXT))
+                else:
+                    nodes.append(TextNode(text, text_type))
 
     return nodes
 
