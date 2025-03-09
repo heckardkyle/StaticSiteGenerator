@@ -1,8 +1,13 @@
 import os
 import shutil
+import sys
 from generate_webpage import generate_pages_recursive
 
-public_path = os.path.join(".", "public")
+if len(sys.argv) <= 1:
+    base_path = "/"
+else:
+    base_path = sys.argv[1]
+public_path = os.path.join(".", "docs")
 static_path = os.path.join(".", "static")
 
 def main():
@@ -38,7 +43,7 @@ def copy_static_files(path, files):
             
             copy_static_files(file_path, os.listdir(file_path))
 
-    generate_pages_recursive("./content/", "./template.html", "./public/")
+    generate_pages_recursive("./content/", "./template.html", public_path)
     
     return
 

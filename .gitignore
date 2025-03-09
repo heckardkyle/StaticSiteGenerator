@@ -2,4 +2,4 @@ __pycache__/
 main.sh
 test.sh
 server.sh
-public/
+build.sh
